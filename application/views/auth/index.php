@@ -12,16 +12,18 @@
                 <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
               </div>
               <?= $this->session->flashdata('message') ?>
-              <form class="user">
+              <form class="user" action="" method="POST">
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                  <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                  <?= form_error('email', '<small class="text-danger pl-2">', '</small>') ?>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                  <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Password">
+                  <?= form_error('password', '<small class="text-danger pl-2">', '</small>') ?>
                 </div>
-                <a href="index.html" class="btn btn-primary btn-user btn-block">
+                <button type="submit" class="btn btn-primary btn-user btn-block">
                   Login
-                </a>
+                </button>
                 <hr>
                 <div class="text-center">
                   <a class="small" href="#">Forgot Password?</a>
@@ -38,3 +40,10 @@
   </div>
 
 </div>
+
+<?php
+if ($this->session->flashdata('message')) {
+  unset($_SESSION['message']);
+}
+
+?>
