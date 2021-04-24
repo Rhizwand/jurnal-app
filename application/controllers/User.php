@@ -5,6 +5,7 @@ class User extends CI_Controller
 {
   public function index()
   {
-    echo 'Welcome ';
+    $data['title'] = 'My Profile';
+    load_templates_view('user/index', $data);
   }
 }
