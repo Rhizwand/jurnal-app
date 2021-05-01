@@ -14,4 +14,9 @@ class Jurnal extends CI_Controller
     $data['title'] = 'Kode Akun';
     load_templates_view('jurnal/kode_akun', $data);
   }
+
+  public function uploadKode()
+  {
+    $_SESSION['kode'] = $this->input->post('kode');
+  }
 }
