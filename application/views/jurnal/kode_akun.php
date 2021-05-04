@@ -9,11 +9,17 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-1">
       <button type="button" id="upload" class="btn btn-primary mb-3">Upload</button>
     </div>
+    <?php if ($akun) : ?>
+      <div class="col-md-1">
+        <a href="<?= base_url('jurnal/deleteakun') ?>" class="btn btn-danger">Delete</a>
+      </div>
+    <?php endif ?>
   </div>
-  <?php if (isset($_SESSION['kode'])) : ?>
+  <?php
+  if ($akun) : ?>
     <div class="row">
       <div class="col-md-10">
         <table class="table table-bordered">
@@ -27,19 +33,16 @@
           </thead>
           <tbody>
             <?php
-            $kode = json_decode($_SESSION['kode']);
-            unset($_SESSION['kode']);
             $i = 1;
-            foreach ($kode as $k) :
+            foreach ($akun as $k) :
             ?>
               <tr>
-                <th scope="row"><?= $i ?></th>
-                <td><?= $k->kode_akun ?></td>
-                <td><?= $k->nama_akun ?></td>
-                <td><?= $k->saldo_normal ?></td>
+                <th scope="row"><?= $i++ ?></th>
+                <td><?= $k["kode_akun"] ?></td>
+                <td><?= $k["nama_akun"] ?></td>
+                <td><?= $k["saldo_normal"] ?></td>
               </tr>
             <?php
-              $i++;
             endforeach;
             ?>
           </tbody>
