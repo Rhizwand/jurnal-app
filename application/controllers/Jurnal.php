@@ -5,7 +5,9 @@ class Jurnal extends CI_Controller
 {
   public function index()
   {
+    $data['akun'] = $this->db->get_where('jurnal_app', ['user_id' => $this->session->userdata('user_id')])->result_array();
     $data['title'] = "Jurnal";
+    echo $this->input->post('tanggal');
     load_templates_view('Jurnal/index', $data);
   }
 
@@ -36,5 +38,27 @@ class Jurnal extends CI_Controller
     $this->db->where('user_id', $this->session->userdata('user_id'));
     $this->db->delete('daftar_akun');
     redirect('jurnal/kode_akun');
+  }
+
+  public function insert_data()
+  {
+    $akun = json_decode($this->input->post('jurnal'));
+    for (
+      $i = 0;
+      $i < count($akun[0]);
+      $i++
+    ) {
+      $data = [
+        "user_id" => $this->session->userdata('user_id'),
+        "tanggal" => $akun[0][$i],
+        "bukti" => $akun[1][$i],
+        "jurnal" => $akun[2][$i],
+        "keterangan" => $akun[3][$i],
+        "ref" => $akun[4][$i],
+        "tambah_kurang" => $akun[5][$i],
+        "nominal" => $akun[6][$i]
+      ];
+      $this->db->insert('jurnal_app', $data);
+    }
   }
 }
