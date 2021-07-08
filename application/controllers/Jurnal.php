@@ -45,9 +45,10 @@ class Jurnal extends CI_Controller
     $akun = json_decode($this->input->post('jurnal'));
     for (
       $i = 0;
-      $i < count($akun[0]);
+      $i < count($akun[0]) - 1;
       $i++
     ) {
+      var_dump($akun[0]);
       $data = [
         "user_id" => $this->session->userdata('user_id'),
         "tanggal" => $akun[0][$i],
@@ -58,7 +59,20 @@ class Jurnal extends CI_Controller
         "tambah_kurang" => $akun[5][$i],
         "nominal" => $akun[6][$i]
       ];
-      $this->db->insert('jurnal_app', $data);
+      // $this->db->insert('jurnal_app', $data);
     }
+  }
+
+  public function delete($id)
+  {
+    $this->db->where(['id' => $id]);
+    $this->db->delete('jurnal_app');
+    redirect('jurnal');
+  }
+
+  public function edit()
+  {
+    $id = $this->input->post('id');
+    echo json_encode($this->db->get_where('jurnal_app', ['id' => $id])->row_array());
   }
 }

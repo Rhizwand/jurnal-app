@@ -17,6 +17,7 @@
                     <th scope="col">Nama Akun</th>
                     <th scope="col">Debit</th>
                     <th scope="col">Kredit</th>
+                    <th scope="col">Lainnya</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,7 +70,10 @@
                         }
                         ?>
                       </td>
-
+                      <td>
+                        <a href="<?= base_url('jurnal/edit/') . $a['id'] ?>" class="btn badge badge-success modalEdit" data-toggle="modal" data-target="#editModal" data-id="<?= $a['id'] ?>" data-url="<?= base_url(); ?>"><i class="fas fa-edit"></i></a>
+                        <a href="<?= base_url('jurnal/delete/') . $a['id'] ?>" class="btn badge badge-danger" onclick="return confirm('ini akan menghapus data');"><i class="fas fa-trash-alt"></i></a>
+                      </td>
                       <?php
                       $jumlahDebit += $debit;
                       $jumlahKredit += $kredit;
@@ -93,7 +97,7 @@
         </div>
         <!-- End of Main Content -->
 
-        <!-- Modal -->
+        <!-- Modal Tambah Data-->
         <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -125,13 +129,13 @@
                     <tr class="formel">
                       <div class="row">
                         <td>
-                          <input type="date" class="form-control tanggal" id="tanggal" style="width: 170px;">
+                          <input type="date" class="form-control tanggal" style="width: 170px;">
                         </td>
                         <td>
-                          <input type="text" class="form-control bukti" id="bukti">
+                          <input type="text" class="form-control bukti">
                         </td>
                         <td>
-                          <select class="custom-select jurnal" id="jurnal" style="width: 132px;">
+                          <select class="custom-select jurnal" style="width: 132px;">
                             <option value="Umum" selected>Umum</option>
                             <option value="Penyesuaian">Penyesuaian</option>
                             <option value="Penutup">Penutup</option>
@@ -139,23 +143,23 @@
 
                         </td>
                         <td>
-                          <input type="text" class="form-control keterangan" id="keterangan">
+                          <input type="text" class="form-control keterangan">
                         </td>
                         <td>
-                          <select class="custom-select ref" id="ref">
+                          <select class="custom-select ref">
                             <?php foreach ($refs as $ref) : ?>
                               <option class="kode_akun" value="<?= $ref['kode_akun'] ?>"><?= $ref['kode_akun'] ?></option>
                             <?php endforeach; ?>
                           </select>
                         </td>
                         <td>
-                          <select class="custom-select tambah_kurang" id="tambah_kurang">
+                          <select class="custom-select tambah_kurang">
                             <option value="Tambah" selected>Tambah</option>
                             <option value="Kurang">Kurang</option>
                           </select>
                         </td>
                         <td>
-                          <input type="number" class="form-control nominal" id="nominal">
+                          <input type="number" class="form-control nominal">
                         </td>
                       </div>
                     </tr>
@@ -167,6 +171,76 @@
                   <button type="button" class="btn btn-primary" id="tambahkan">Tambahkan</button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Edit Data-->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-borderless table-sm">
+                  <tr>
+                    <div class="row">
+                      <th class="col-md-1">Tanggal</th>
+                      <th class="col-md-1">Bukti</th>
+                      <th class="col-md-1">Jurnal</th>
+                      <th class="col-md-3">Keterangan</th>
+                      <th class="col-md-1">Ref</th>
+                      <th class="col-md-1">Tambah/Kurang</th>
+                      <th class="col-md-2">Nominal</th>
+                    </div>
+                  </tr>
+                  <tr class="formel">
+                    <div class="row">
+                      <td>
+                        <input type="date" class="form-control tanggal" id="tanggal" style="width: 170px;">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control bukti" id="bukti">
+                      </td>
+                      <td>
+                        <select class="custom-select jurnal" id="jurnal" style="width: 132px;">
+                          <option value="Umum" selected>Umum</option>
+                          <option value="Penyesuaian">Penyesuaian</option>
+                          <option value="Penutup">Penutup</option>
+                        </select>
+
+                      </td>
+                      <td>
+                        <input type="text" class="form-control keterangan" id="keterangan">
+                      </td>
+                      <td>
+                        <select class="custom-select ref" id="ref">
+                          <?php foreach ($refs as $ref) : ?>
+                            <option class="kode_akun" value="<?= $ref['kode_akun'] ?>"><?= $ref['kode_akun'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="custom-select tambah_kurang" id="tambah_kurang">
+                          <option value="Tambah">Tambah</option>
+                          <option value="Kurang">Kurang</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control nominal" id="nominal">
+                      </td>
+                    </div>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
             </div>
           </div>
         </div>

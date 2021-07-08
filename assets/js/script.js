@@ -1,4 +1,36 @@
 $(document).ready(function () {
+	// Edit Data Handle
+	$(".modalEdit").on("click", function () {
+		const id = $(this).data("id");
+		const baseurl = $(this).data("url");
+		$.ajax({
+			url: baseurl + "jurnal/edit",
+			type: "POST",
+			data: {
+				id,
+			},
+			success: function (res) {
+				const {
+					tanggal,
+					bukti,
+					jurnal,
+					keterangan,
+					ref,
+					tambah_kurang,
+					nominal,
+				} = JSON.parse(res);
+				$("#tanggal").val(tanggal);
+				$("#bukti").val(bukti);
+				$("#jurnal").val(jurnal);
+				$("#keterangan").val(keterangan);
+				$("#ref").val(ref);
+				$("#tambah_kurang").val(tambah_kurang);
+				$("#nominal").val(nominal);
+			},
+		});
+	});
+	// end Edit Data Handle
+
 	// form multiple handle
 	let ref = "";
 	$(".kode_akun").each(function () {
@@ -51,7 +83,7 @@ $(document).ready(function () {
 	$("#jumlah_baris").val(counter);
 	// writeForm();
 	$("#kurang").on("click", function () {
-		if (counter > 1) {
+		if (counter >= 1) {
 			counter -= 1;
 			$(".formel").last().remove();
 			$("#jumlah_baris").val(counter);
