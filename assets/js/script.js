@@ -11,6 +11,7 @@ $(document).ready(function () {
 			},
 			success: function (res) {
 				const {
+					id,
 					tanggal,
 					bukti,
 					jurnal,
@@ -26,6 +27,7 @@ $(document).ready(function () {
 				$("#ref").val(ref);
 				$("#tambah_kurang").val(tambah_kurang);
 				$("#nominal").val(nominal);
+				$("#id").val(id);
 			},
 		});
 	});
@@ -83,9 +85,9 @@ $(document).ready(function () {
 	$("#jumlah_baris").val(counter);
 	// writeForm();
 	$("#kurang").on("click", function () {
-		if (counter >= 1) {
+		if (counter > 1) {
 			counter -= 1;
-			$(".formel").last().remove();
+			$("#form-row .formel").last().remove();
 			$("#jumlah_baris").val(counter);
 		}
 	});
@@ -142,7 +144,7 @@ $(document).ready(function () {
 			type: "POST",
 			data: { jurnal: JSON.stringify(data_akun) },
 			success: (res) => {
-				document.location.href = baseurl + "jurnal/index";
+				document.location.href = baseurl + "jurnal";
 			},
 		});
 	});
@@ -158,6 +160,8 @@ $(document).ready(function () {
 
 	$("#upload").on("click", function () {
 		if (selectedFile) {
+			$(this).html("Loading...");
+			$(this).attr("disabled", true);
 			const fileReader = new FileReader();
 			fileReader.readAsBinaryString(selectedFile);
 			fileReader.onload = function (event) {
@@ -177,6 +181,10 @@ $(document).ready(function () {
 						},
 						success: function (result) {
 							document.location.href = baseurl + "jurnal/Kode_akun";
+							// console.log(result);
+						},
+						error: function (err) {
+							console.log(JSON.parse(err));
 						},
 					});
 				});
